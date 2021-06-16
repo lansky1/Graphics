@@ -13,6 +13,7 @@ int correct_clicks = 0;
 int total_clicks = 0;
 float xc, yc;
 float mx, my;
+int screen;
 
 void screen_squares()
 {
@@ -160,6 +161,20 @@ void background2()
     renderBitmapString(445, 600, GLUT_BITMAP_TIMES_ROMAN_24, "choose level");
 }
 
+void background3()
+{
+    glColor3f(0.1882, 0.098, 0.2039);
+    glBegin(GL_POLYGON);
+    glVertex2f(874, 800);
+    glVertex2f(150, 700);
+    glVertex2f(150, 200);
+    glVertex2f(874, 100);
+    glEnd();
+    glColor3f(1.0, 0.0784, 0.5764);
+    renderBitmapString(830, 820, GLUT_BITMAP_TIMES_ROMAN_24, "pause menu");
+    renderBitmapString(425, 600, GLUT_BITMAP_TIMES_ROMAN_24, "game is paused");
+}
+
 void high(int i, int j)
 {
     if (game_state == 0)
@@ -225,6 +240,38 @@ void high(int i, int j)
             renderBitmapString(480, 395, GLUT_BITMAP_TIMES_ROMAN_24, "level 2");
         }
     }
+
+    if (game_state == 4)
+    {
+        j = 900 - j;
+        if (((396.995 < i) && (i < 636.995)) && ((465 < j) && (j < 555)))
+        {
+            glColor3f(0.0, 0.5, 0.0);
+            // the intended start button
+            glBegin(GL_QUADS);
+            glVertex2f(416.995, 555.0);
+            glVertex2f(416.995, 465.0);
+            glVertex2f(576.995, 465.0);
+            glVertex2f(576.995, 555.0);
+            glEnd();
+            glColor3f(1.0, 1.0, 1.0);
+            renderBitmapString(463, 505, GLUT_BITMAP_TIMES_ROMAN_24, "resume");
+        }
+
+        if (((396.995 < i) && (i < 636.995)) && ((355 < j) && (j < 445)))
+        {
+            glColor3f(0.0, 0.5, 0.0);
+            // the intended exit button
+            glBegin(GL_QUADS);
+            glVertex2f(396.995, 445.0);
+            glVertex2f(396.995, 355.0);
+            glVertex2f(606.995, 355.0);
+            glVertex2f(606.995, 445.0);
+            glEnd();
+            glColor3f(1.0, 1.0, 1.0);
+            renderBitmapString(420, 395, GLUT_BITMAP_TIMES_ROMAN_24, "go to main menu");
+        }
+    }
 }
 
 void mainmenu()
@@ -281,6 +328,20 @@ void level_screen()
     renderBitmapString(480, 395, GLUT_BITMAP_TIMES_ROMAN_24, "level 2");
     high(mx, my);
     //level_options();
+    glutPostRedisplay();
+    glutSwapBuffers();
+}
+
+void pause_menu()
+{
+    game_state = 4;
+    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(0, 0, 0, 0);
+    background3();
+    glColor3f(1.0, 1.0, 1.0);
+    renderBitmapString(463, 505, GLUT_BITMAP_TIMES_ROMAN_24, "resume");
+    renderBitmapString(420, 395, GLUT_BITMAP_TIMES_ROMAN_24, "go to main menu");
+    high(mx, my);
     glutPostRedisplay();
     glutSwapBuffers();
 }
@@ -794,6 +855,21 @@ void mouse(int btn, int state, int x, int y)
         if (((376.995 < x) && (x < 606.995)) && ((355 < y) && (y < 445)))
             glutDisplayFunc(level2);
     }
+
+    if (btn == GLUT_LEFT_BUTTON && state == GLUT_DOWN && game_state == 4)
+    {
+        y = 900 - y;
+        if (((416.995 < x) && (x < 576.995)) && ((465 < y) && (y < 555)))
+        {
+            if (screen == 1)
+                glutDisplayFunc(display);
+            else
+                glutDisplayFunc(level2);
+        }            
+
+        if (((396.995 < x) && (x < 606.995)) && ((355 < y) && (y < 445)))
+            respawn();
+    }
 }
 
 void mouse2(int x, int y)
@@ -815,6 +891,9 @@ void game()
 
     else if (game_state == 3)
         level2();
+
+    else if (game_state == 4)
+        pause_menu();
 }
 
 void keypress(unsigned char key, int x, int y)
@@ -835,11 +914,17 @@ void keypress(unsigned char key, int x, int y)
         glutDisplayFunc(mainmenu);
 
     if (key == 27 && game_state == 2)
-        glutDisplayFunc(level_screen);
+    {
+        screen = 1;
+        glutDisplayFunc(pause_menu);
+    }
 
     if (key == 27 && game_state == 3)
-        glutDisplayFunc(level_screen);
-
+    {
+        screen = 2;
+        glutDisplayFunc(pause_menu);
+    }
+    
     if (key == 49 && game_state == 2)
         click1();
 
