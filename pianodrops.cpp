@@ -12,6 +12,7 @@ int lives = 9;
 int correct_clicks = 0;
 int total_clicks = 0;
 float xc, yc;
+float mx, my;
 
 void screen_squares()
 {
@@ -54,27 +55,23 @@ void text_blocks()
 
 void game_options()
 {
-    glColor3f(0.862, 0.0784, 0.2352);
+    glColor3f(0.0, 0.5, 0.0);
 
-    // the intended proceed button
+    // the intended start button
     glBegin(GL_QUADS);
-    glVertex2f(376.995, 555.0);
-    glVertex2f(376.995, 465.0);
-    glVertex2f(646.995, 465.0);
-    glVertex2f(646.995, 555.0);
+    glVertex2f(396.995, 555.0);
+    glVertex2f(396.995, 465.0);
+    glVertex2f(636.995, 465.0);
+    glVertex2f(636.995, 555.0);
     glEnd();
 
     // the intended exit button
     glBegin(GL_QUADS);
-    glVertex2f(376.995, 445.0);
-    glVertex2f(376.995, 355.0);
-    glVertex2f(646.995, 355.0);
-    glVertex2f(646.995, 445.0);
+    glVertex2f(396.995, 445.0);
+    glVertex2f(396.995, 355.0);
+    glVertex2f(636.995, 355.0);
+    glVertex2f(636.995, 445.0);
     glEnd();
-
-    glColor3f(1.0, 1.0, 1.0);
-    renderBitmapString(490, 505, GLUT_BITMAP_TIMES_ROMAN_24, "Start");
-    renderBitmapString(490, 395, GLUT_BITMAP_TIMES_ROMAN_24, "Exit");
 }
 
 void decor()
@@ -134,15 +131,116 @@ void decor()
     glEnd();
 }
 
+void background()
+{
+    glColor3f(0.1882, 0.098, 0.2039);
+    glBegin(GL_POLYGON);
+    glVertex2f(874, 700);
+    glVertex2f(190, 800);
+    glVertex2f(150, 600);
+    glVertex2f(150, 100);
+    glVertex2f(874, 200);
+    glEnd();
+    glColor3f(1.0, 0.0784, 0.5764);
+    renderBitmapString(800, 800, GLUT_BITMAP_TIMES_ROMAN_24, "main menu");
+    renderBitmapString(445, 600, GLUT_BITMAP_TIMES_ROMAN_24, "Piano Drops");    
+}
+
+void background2()
+{
+    glColor3f(0.1882, 0.098, 0.2039);
+    glBegin(GL_POLYGON);
+    glVertex2f(874, 800);
+    glVertex2f(150, 700);
+    glVertex2f(150, 200);
+    glVertex2f(874, 100);
+    glEnd();
+    glColor3f(1.0, 0.0784, 0.5764);
+    renderBitmapString(850, 820, GLUT_BITMAP_TIMES_ROMAN_24, "levels");
+    renderBitmapString(445, 600, GLUT_BITMAP_TIMES_ROMAN_24, "choose level");
+}
+
+void high(int i, int j)
+{
+    if (game_state == 0)
+    {
+        j = 900 - j;
+        if (((396.995 < i) && (i < 636.995)) && ((465 < j) && (j < 555)))
+        {
+            glColor3f(0.0, 0.5, 0.0);
+            // the intended start button
+            glBegin(GL_QUADS);
+            glVertex2f(396.995, 555.0);
+            glVertex2f(396.995, 465.0);
+            glVertex2f(606.995, 465.0);
+            glVertex2f(606.995, 555.0);
+            glEnd();
+            glColor3f(1.0, 1.0, 1.0);
+            renderBitmapString(455, 500, GLUT_BITMAP_TIMES_ROMAN_24, "start game");
+        }
+
+        if (((396.995 < i) && (i < 636.995)) && ((355 < j) && (j < 445)))
+        {
+            glColor3f(0.0, 0.5, 0.0);
+            // the intended exit button
+            glBegin(GL_QUADS);
+            glVertex2f(396.995, 445.0);
+            glVertex2f(396.995, 355.0);
+            glVertex2f(606.995, 355.0);
+            glVertex2f(606.995, 445.0);
+            glEnd();
+            glColor3f(1.0, 1.0, 1.0);
+            renderBitmapString(456, 390, GLUT_BITMAP_TIMES_ROMAN_24, "quit game");
+        }
+    }
+
+    if (game_state == 1)
+    {
+        j = 900 - j;
+        if (((396.995 < i) && (i < 636.995)) && ((465 < j) && (j < 555)))
+        {
+            glColor3f(0.0, 0.5, 0.0);
+            // the intended start button
+            glBegin(GL_QUADS);
+            glVertex2f(416.995, 555.0);
+            glVertex2f(416.995, 465.0);
+            glVertex2f(606.995, 465.0);
+            glVertex2f(606.995, 555.0);
+            glEnd();
+            glColor3f(1.0, 1.0, 1.0);
+            renderBitmapString(480, 505, GLUT_BITMAP_TIMES_ROMAN_24, "level 1");
+        }
+
+        if (((396.995 < i) && (i < 636.995)) && ((355 < j) && (j < 445)))
+        {
+            glColor3f(0.0, 0.5, 0.0);
+            // the intended exit button
+            glBegin(GL_QUADS);
+            glVertex2f(416.995, 445.0);
+            glVertex2f(416.995, 355.0);
+            glVertex2f(606.995, 355.0);
+            glVertex2f(606.995, 445.0);
+            glEnd();
+            glColor3f(1.0, 1.0, 1.0);
+            renderBitmapString(480, 395, GLUT_BITMAP_TIMES_ROMAN_24, "level 2");
+        }
+    }
+}
+
 void mainmenu()
 {
     game_state = 0;
     glClear(GL_COLOR_BUFFER_BIT);
-    glClearColor(1, 1, 1, 1);
-    screen_squares();
-    text_blocks();
-    game_options();
-    decor();
+    glClearColor(0, 0, 0, 1);
+    background();
+    glColor3f(1.0, 1.0, 1.0);
+    renderBitmapString(455, 500, GLUT_BITMAP_TIMES_ROMAN_24, "start game");
+    renderBitmapString(456, 390, GLUT_BITMAP_TIMES_ROMAN_24, "quit game");
+    high(mx, my);
+    //screen_squares();
+    //text_blocks();
+    //game_options();
+    //decor();
     glutPostRedisplay();
     glutSwapBuffers();
 }
@@ -168,18 +266,21 @@ void level_options()
     glEnd();
 
     glColor3f(1.0, 1.0, 1.0);
-    renderBitmapString(480, 505, GLUT_BITMAP_TIMES_ROMAN_24, "Level 1");
-    renderBitmapString(480, 395, GLUT_BITMAP_TIMES_ROMAN_24, "Level 2");
+    renderBitmapString(480, 505, GLUT_BITMAP_TIMES_ROMAN_24, "level 1");
+    renderBitmapString(480, 395, GLUT_BITMAP_TIMES_ROMAN_24, "level 2");
 }
 
 void level_screen()
 {
     game_state = 1;
     glClear(GL_COLOR_BUFFER_BIT);
-    glClearColor(1, 1, 1, 1);
-    glColor3f(1.0, 0.0784, 0.5764);
-    renderBitmapString(445, 670, GLUT_BITMAP_TIMES_ROMAN_24, "Choose Level");
-    level_options();
+    glClearColor(0, 0, 0, 0);
+    background2();
+    glColor3f(1.0, 1.0, 1.0);
+    renderBitmapString(480, 505, GLUT_BITMAP_TIMES_ROMAN_24, "level 1");
+    renderBitmapString(480, 395, GLUT_BITMAP_TIMES_ROMAN_24, "level 2");
+    high(mx, my);
+    //level_options();
     glutPostRedisplay();
     glutSwapBuffers();
 }
@@ -635,8 +736,8 @@ void level2()
     glVertex2f(230, 300);
     glVertex2f(730, 300);
     glEnd();
-    renderBitmapString(795, 520, GLUT_BITMAP_TIMES_ROMAN_10, "Piece of Advisory");
-    renderBitmapString(765, 490, GLUT_BITMAP_TIMES_ROMAN_10, "Let the block cross the line.");
+    renderBitmapString(795, 520, GLUT_BITMAP_TIMES_ROMAN_24, "Piece of Advise");
+    renderBitmapString(745, 490, GLUT_BITMAP_TIMES_ROMAN_24, "Let the block cross the line.");
     renderBitmapString(795, 820, GLUT_BITMAP_TIMES_ROMAN_24, "Accuracy");
     renderBitmapString(865, 770, GLUT_BITMAP_TIMES_ROMAN_24, "%");
     renderBitmapString(835, 770, GLUT_BITMAP_TIMES_ROMAN_24, buffer1);
@@ -647,7 +748,7 @@ void level2()
     if (yc < 0)
         level_start();
     sample();
-    yc -= 0.2;
+    yc -= 1;
     if ((yc > 300) && xc == 267.5)
         detect(0);
     if ((yc > 300) && xc == 392.5)
@@ -677,22 +778,28 @@ void mouse(int btn, int state, int x, int y)
     if (btn == GLUT_LEFT_BUTTON && state == GLUT_DOWN && game_state == 0)
     {
         y = 900 - y;
-        if (((376.995 < x) && (x < 646.995)) && ((465 < y) && (y < 555)))
+        if (((376.995 < x) && (x < 606.995)) && ((465 < y) && (y < 555)))
             glutDisplayFunc(level_screen);
 
-        if (((376.995 < x) && (x < 646.995)) && ((355 < y) && (y < 445)))
+        if (((376.995 < x) && (x < 606.995)) && ((355 < y) && (y < 445)))
             exit(0);
     }
 
     if (btn == GLUT_LEFT_BUTTON && state == GLUT_DOWN && game_state == 1)
     {
         y = 900 - y;
-        if (((376.995 < x) && (x < 646.995)) && ((465 < y) && (y < 555)))
+        if (((376.995 < x) && (x < 606.995)) && ((465 < y) && (y < 555)))
             glutDisplayFunc(display);
 
-        if (((376.995 < x) && (x < 646.995)) && ((355 < y) && (y < 445)))
+        if (((376.995 < x) && (x < 606.995)) && ((355 < y) && (y < 445)))
             glutDisplayFunc(level2);
     }
+}
+
+void mouse2(int x, int y)
+{
+    mx = x; my = y;
+    glutPostRedisplay();
 }
 
 void game()
@@ -712,14 +819,17 @@ void game()
 
 void keypress(unsigned char key, int x, int y)
 {
-    if (key == ' ' && game_state == 0)
-        glutDisplayFunc(level_screen);
+    //if (key == ' ' && game_state == 0)
+        //glutDisplayFunc(level_screen);
 
     if (key == 27 && game_state == 0)
         exit(0);
 
-    if (key == ' ' && game_state == 1)
+    if (key == 49 && game_state == 1)
         glutDisplayFunc(display);
+
+    if (key == 50 && game_state == 1)
+        glutDisplayFunc(level2);
 
     if (key == 27 && game_state == 1)
         glutDisplayFunc(mainmenu);
@@ -777,6 +887,7 @@ int main(int argc, char** argv)
     glutDisplayFunc(game);
     glutKeyboardFunc(keypress);
     glutMouseFunc(mouse);
+    glutPassiveMotionFunc(mouse2);
     init();
     glutMainLoop();
 }
