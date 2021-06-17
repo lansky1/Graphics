@@ -15,26 +15,6 @@ float xc, yc;
 float mx, my;
 int screen;
 
-void screen_squares()
-{
-    for (int i = 1; i < 4; ++i)
-        for (int j = 1; j < 4; ++j)
-        {
-            if ((i % 2 != 0) && (j % 2 != 0))
-                glColor3f(0.862, 0.0784, 0.2352);
-            else if (i == j)
-                glColor3f(1.0, 1.0, 1.0);
-            else
-                glColor3f(0.9803, 0.9803, 0.8235);
-            glBegin(GL_QUADS);
-            glVertex2f((1024 / 3) * (j - 1), (900 / 3) * (i - 1));
-            glVertex2f((1024 / 3) * (j - 1), (900 / 3) * (i));
-            glVertex2f((1024 / 3) * (j), (900 / 3) * (i));
-            glVertex2f((1024 / 3) * (j), (900 / 3) * (i - 1));
-            glEnd();
-        }
-}
-
 void renderBitmapString(float x, float y, void* font, const char* string)
 {
     const char* c;
@@ -43,93 +23,6 @@ void renderBitmapString(float x, float y, void* font, const char* string)
     {
         glutBitmapCharacter(font, *c);
     }
-}
-
-void text_blocks()
-{
-    glColor3f(1.0, 0.0784, 0.5764);
-    renderBitmapString(440, 730, GLUT_BITMAP_TIMES_ROMAN_24, "\"Piano Drops\"");
-
-    glColor3f(0.0, 0.0, 0.0);
-    renderBitmapString(480, 680, GLUT_BITMAP_TIMES_ROMAN_24, "lansky");
-}
-
-void game_options()
-{
-    glColor3f(0.0, 0.5, 0.0);
-
-    // the intended start button
-    glBegin(GL_QUADS);
-    glVertex2f(396.995, 555.0);
-    glVertex2f(396.995, 465.0);
-    glVertex2f(636.995, 465.0);
-    glVertex2f(636.995, 555.0);
-    glEnd();
-
-    // the intended exit button
-    glBegin(GL_QUADS);
-    glVertex2f(396.995, 445.0);
-    glVertex2f(396.995, 355.0);
-    glVertex2f(636.995, 355.0);
-    glVertex2f(636.995, 445.0);
-    glEnd();
-}
-
-void decor()
-{
-    glColor3f(0.3725, 0.6196, 0.6274);
-    glBegin(GL_POLYGON);
-    glVertex2f(50 + 0.0, 350 + 25.0 * 4);
-    glColor3f(0.4, 0.8039, 0.6667);
-    glVertex2f(50 + 25.0 * 4, 350 + 50.0 * 4);
-    glVertex2f(50 + 50.0 * 4, 350 + 25.0 * 4);
-    glVertex2f(50 + 25.0 * 4, 350 + 0.0);
-    glEnd();
-
-    glColor3f(0.1803, 0.5450, 0.3411);
-    glBegin(GL_QUADS);
-    glVertex2f(50 + 37.5 * 4, 350 + 50.0 * 4);
-    glVertex2f(50 + 25.0 * 4, 350 + 50.0 * 4);
-    glVertex2f(50 + 50.0 * 4, 350 + 25.0 * 4);
-    glColor3f(0.4, 0.8039, 0.6667);
-    glVertex2f(50 + 62.5 * 4, 350 + 25.0 * 4);
-    glEnd();
-
-    glColor3f(0.1803, 0.5450, 0.3411);
-    glBegin(GL_QUADS);
-    glVertex2f(50 + 62.5 * 4, 350 + 25.0 * 4);
-    glVertex2f(50 + 50.0 * 4, 350 + 25.0 * 4);
-    glVertex2f(50 + 25.0 * 4, 350 + 0.0 * 4);
-    glColor3f(0.4, 0.8039, 0.6667);
-    glVertex2f(50 + 37.5 * 4, 350 + 0.0 * 4);
-    glEnd();
-
-    glColor3f(0.3725, 0.6196, 0.6274);
-    glBegin(GL_POLYGON);
-    glVertex2f(725 + 0.0, 350 + 25.0 * 4);
-    glColor3f(0.4, 0.8039, 0.6667);
-    glVertex2f(725 + 25.0 * 4, 350 + 50.0 * 4);
-    glVertex2f(725 + 50.0 * 4, 350 + 25.0 * 4);
-    glVertex2f(725 + 25.0 * 4, 350 + 0.0);
-    glEnd();
-
-    glColor3f(0.1803, 0.5450, 0.3411);
-    glBegin(GL_QUADS);
-    glVertex2f(725 + 37.5 * 4, 350 + 50.0 * 4);
-    glVertex2f(725 + 25.0 * 4, 350 + 50.0 * 4);
-    glVertex2f(725 + 50.0 * 4, 350 + 25.0 * 4);
-    glColor3f(0.4, 0.8039, 0.6667);
-    glVertex2f(725 + 62.5 * 4, 350 + 25.0 * 4);
-    glEnd();
-
-    glColor3f(0.1803, 0.5450, 0.3411);
-    glBegin(GL_QUADS);
-    glVertex2f(725 + 62.5 * 4, 350 + 25.0 * 4);
-    glVertex2f(725 + 50.0 * 4, 350 + 25.0 * 4);
-    glVertex2f(725 + 25.0 * 4, 350 + 0.0 * 4);
-    glColor3f(0.4, 0.8039, 0.6667);
-    glVertex2f(725 + 37.5 * 4, 350 + 0.0 * 4);
-    glEnd();
 }
 
 void background()
@@ -284,37 +177,8 @@ void mainmenu()
     renderBitmapString(455, 500, GLUT_BITMAP_TIMES_ROMAN_24, "start game");
     renderBitmapString(456, 390, GLUT_BITMAP_TIMES_ROMAN_24, "quit game");
     high(mx, my);
-    //screen_squares();
-    //text_blocks();
-    //game_options();
-    //decor();
     glutPostRedisplay();
     glutSwapBuffers();
-}
-
-void level_options()
-{
-    glColor3f(0.862, 0.0784, 0.2352);
-
-    // the intended level 1 button
-    glBegin(GL_QUADS);
-    glVertex2f(376.995, 555.0);
-    glVertex2f(376.995, 465.0);
-    glVertex2f(646.995, 465.0);
-    glVertex2f(646.995, 555.0);
-    glEnd();
-
-    // the intended level 2 button
-    glBegin(GL_QUADS);
-    glVertex2f(376.995, 445.0);
-    glVertex2f(376.995, 355.0);
-    glVertex2f(646.995, 355.0);
-    glVertex2f(646.995, 445.0);
-    glEnd();
-
-    glColor3f(1.0, 1.0, 1.0);
-    renderBitmapString(480, 505, GLUT_BITMAP_TIMES_ROMAN_24, "level 1");
-    renderBitmapString(480, 395, GLUT_BITMAP_TIMES_ROMAN_24, "level 2");
 }
 
 void level_screen()
@@ -327,7 +191,6 @@ void level_screen()
     renderBitmapString(480, 505, GLUT_BITMAP_TIMES_ROMAN_24, "level 1");
     renderBitmapString(480, 395, GLUT_BITMAP_TIMES_ROMAN_24, "level 2");
     high(mx, my);
-    //level_options();
     glutPostRedisplay();
     glutSwapBuffers();
 }
@@ -420,8 +283,8 @@ void init()
 {
     glClearColor(1.0, 1.0, 1.0, 1.0);
     glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();                    // reset to identity
-    gluOrtho2D(0.0, 1023.0, 0.0, 899.0); // l, r, b, t
+    glLoadIdentity();                    
+    gluOrtho2D(0.0, 1023.0, 0.0, 899.0); 
 }
 
 void lines(int X)
@@ -898,9 +761,6 @@ void game()
 
 void keypress(unsigned char key, int x, int y)
 {
-    //if (key == ' ' && game_state == 0)
-        //glutDisplayFunc(level_screen);
-
     if (key == 27 && game_state == 0)
         exit(0);
 
