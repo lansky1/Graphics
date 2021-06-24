@@ -1,4 +1,4 @@
-# Piano Drops
-An OpenGL Project
+# Graphics Stuff
 
-Standard. Will update and clear, someday.
+building whatever builds.
+will update and clear, someday.
