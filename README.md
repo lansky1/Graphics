@@ -3,7 +3,7 @@
 building whatever builds. </br>
 will update and clear, someday.</br>
 
-There are two files currently in the repository.
+There are two files in the repository.
 > painodrops.cpp </br>
 > snake.cpp
 
