@@ -15,3 +15,6 @@ The game is ready as a primitive. The objective of the game is to catch the fall
 ### snake
 Intended as an implementation of the snake game. As of now, it is empty of mechanics and has only menu UI.
 
+### FPS OpenGL - Formation Phase
+1. Early FPS Shooter. 
+2. Inclusion of RPG elements?
